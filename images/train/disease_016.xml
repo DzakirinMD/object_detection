@@ -1,0 +1,38 @@
+<annotation>
+	<folder>train</folder>
+	<filename>disease_016.jpg</filename>
+	<path>C:\tensorflow1\models\research\object_detection\images\train\disease_016.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>blight spot</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>17</xmin>
+			<ymin>144</ymin>
+			<xmax>192</xmax>
+			<ymax>227</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>blight spot</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>430</xmin>
+			<ymin>188</ymin>
+			<xmax>495</xmax>
+			<ymax>244</ymax>
+		</bndbox>
+	</object>
+</annotation>
