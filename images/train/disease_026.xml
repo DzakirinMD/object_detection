@@ -12,27 +12,15 @@
 	</size>
 	<segmented>0</segmented>
 	<object>
-		<name>blight spot</name>
+		<name>Blight Spot</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>243</xmin>
-			<ymin>142</ymin>
-			<xmax>276</xmax>
-			<ymax>171</ymax>
-		</bndbox>
-	</object>
-	<object>
-		<name>blight spot</name>
-		<pose>Unspecified</pose>
-		<truncated>0</truncated>
-		<difficult>0</difficult>
-		<bndbox>
-			<xmin>228</xmin>
-			<ymin>198</ymin>
-			<xmax>274</xmax>
-			<ymax>229</ymax>
+			<xmin>203</xmin>
+			<ymin>25</ymin>
+			<xmax>343</xmax>
+			<ymax>393</ymax>
 		</bndbox>
 	</object>
 </annotation>
