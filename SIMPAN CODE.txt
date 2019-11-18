@@ -1,0 +1,260 @@
+https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10
+--Create environment (mesti 3.6 kebawah.. python 3.7 xsupport lagi tensorflow)
+conda create -n tfupdated pip python=3.6 
+
+
+make sure cd C:\tensorflow1\models\research\object_detection
+
+conda info --envs
+conda activate
+conda deactivate
+conda remove --name myenv --all
+
+--install tensorflow-gpu (dalam environment, environment location C:\Users\Kirin\Anaconda3\envs)
+pip install --ignore-installed --upgrade tensorflow-gpu
+conda install -c anaconda protobuf
+conda install tensorflow-gpu
+
+conda install -c anaconda protobuf
+pip install matplotlib
+pip install pandas
+pip install pillow
+pip install lxml
+pip install Cython
+pip install contextlib2
+pip install jupyter
+pip install opencv-python
+
+https://github.com/philferriere/cocoapi
+
+--Configure PYTHONPATH environment variable
+-- tukar tensorflow1 tu dengan nama env/environment sendiri
+(tensorflow1) C:\> set PYTHONPATH=C:\tensorflow1\models;C:\tensorflow1\models\research;C:\tensorflow1\models\research\slim
+
+--run environment
+-buka cmd in administrator
+conda activate python_36
+(python_36 tu nama object ja time --Create environment boleh tukar nama object tu)
+
+--utk run python
+python
+quit()
+
+
+https://github.com/tzutalin/labelImg
+--untuk buka label image
+pyrcc5 -o libs/resources.py resources.qrc
+python labelImg.py
+python labelImg.py [IMAGE_PATH] [PRE-DEFINED CLASS FILE]
+
+
+--Step untuk resize image
+1. Buat file image image, dalam tu buat 2 file nama train dengan test. letak image_resize.py dalam 2 tu
+2. run image_resize.py dalam 2 folder tu
+3. lepas run ambik dual folder output tu letak kat images. yg file lama boleh buang
+4. make sure 20% dair smua gambar kat test file selebihnya 80% kat train
+
+--Step untuk lukis boundary box (https://github.com/tzutalin/labelImg)
+1. buka cmd in administrator
+2. conda activate python_36
+3. cd ke folder labelimage 
+4. run python labelImg.py
+5. Open Dir>train
+6. Change Save Dir>train 
+7. View> Click Auto, Single, Display
+8. Create Box and label
+9. Untuk picture for next object untick Single class display untuk first gambar je, lepas tu tick balik
+
+--Step untuk convert xml to csv
+1. buka cmd in administrator
+2. conda activate python_36
+3. cd ke folder kt mana ada file tu
+4. run python xml_to_csv.py
+
+--Step create TensorFlow records and label_map
+1. buka file generate_tfrecord.py
+2. guna ganti import tensorflow as tf DENGAN import tensorflow.compat.v1 as tf
+3. edit kat # TO-DO replace this with label map dengan map sendiri
+4. Tukar python path: export PYTHONPATH=$PYTHONPATH:C:\Users\Kirin\Downloads\models\research:C:\Users\Kirin\Downloads\models\research\slim
+5. copy line dalam file py tadi:  python generate_tfrecord.py --csv_input=images/train_labels.csv --image_dir=images/train --output_path=train.record
+6. run line tu
+7. repeat untuk python generate_tfrecord.py --csv_input=images/test_labels.csv  --image_dir=images/test --output_path=test.record
+6. buat file guna text editor. masuk data dalam bentuk bawah. save as labelmap.pbtxt all files
+item {
+  id: 1
+  name: 'nine'
+}
+
+item {
+  id: 2
+  name: 'ten'
+}
+
+7.zip kan ketiga tiga file tu.
+
+TGOK VIDEO number 6
+
+python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v2_coco.config
+python model_main.py --pipeline_config_path=training\ssd_mobilenet_v2_coco.config --model_dir=images --num_train_steps=50000 --sample_1_of_n_eval_examples=1 --alsologtostderr
+
+####export frozen inference graph
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/ssd_mobilenet_v2_coco.config --trained_checkpoint_prefix training/model.ckpt-62085 --output_directory inference_graph
+
+python export_tflite_ssd_graph.py \
+--pipeline_config_path=C:/tensorflow1/models/research/object_detection/training/pipeline.config \
+--trained_checkpoint_prefix=C:/tensorflow1/models/research/object_detection/training/model.ckpt-62085\
+--output_directory=C:/tensorflow1/models/research/object_detection/inference_graph \
+--add_postprocessing_op=true
+
+python export_tflite_ssd_graph.py --pipeline_config_path=C:/tensorflow1/models/research/object_detection/training/pipeline.config --trained_checkpoint_prefix=C:/tensorflow1/models/research/object_detection/training/model.ckpt-62085 --output_directory=C:/tensorflow1/models/research/object_detection/inference_graph --add_postprocessing_op=true
+
+
+####Visualize training
+website untuk visualize neural network tu
+https://github.com/lutzroeder/netron
+
+############################################ERROR SECTION###################
+https://stackoverflow.com/questions/45411700/warning-hdf5-library-version-mismatched-error-python-pandas-windows
+Headers are 1.8.15, library is 1.8.18
+conda install -c anaconda hdf5=1.10.15
+
+kat generate tf record
+import tensorflow.compat.v1 as tf instead of import tensorflow as tf 
+
+############untuk test tensorflow dah setup betul ke dak ###############
+(tensorflow2) C:\tensorflow1\models\research\object_detection>cd C:\tensorflow1\models\research\object_detection
+
+
+
+########################APA YG GUNA##################
+SSD_MOBILENET_V2_300*300_COCO_2019_01_03(for android implementation)
+export the check_point to frozen_inference_graph.pb and to quuantized TensorFLow lite model(for android implementation)
+Boundary box - geomenvprop
+
+--Check CUDA version dan website untuk enable cuda for tensorflow
+nvcc --version
+https://towardsdatascience.com/installing-tensorflow-with-cuda-cudnn-and-gpu-support-on-windows-10-60693e46e781
+
+--check tensorflow version
+(py36) C:\WINDOWS\system32>python
+Python 3.6.8 |Anaconda custom (64-bit)
+
+import tensorflow as tf
+tf.__version__
+
+'1.15.0'
+
+pip show tensorflow
+pip show tensorflow-gpu
+
+python -m pip install tensorflow==1.15
+python -m pip install tensorflow-gpu==1.15
+
+pip uninstall tensorflow
+pip uninstall tensorflow-gpu
+
+https://askubuntu.com/questions/764032/how-to-uninstall-tensorflow-completely
+
+https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/install.html
+
+tukar label map ikot https://github.com/tensorflow/models/issues/4200
+
+###Generate tf_record###
+python generate_tfrecord.py --csv_input=images/train_labels.csv --image_dir=images/train --output_path=train.record
+python generate_tfrecord.py --csv_input=images/test_labels.csv  --image_dir=images/test --output_path=test.record
+
+
+###Train Model###
+# sebelum train check dulu label map dh betul ke x.
+# labelmap sama x mcm generate_tfrecord.py
+# Check .config file betul ke x untuk nk start train
+python train.py --pipeline_config_path=C:\tensorflow1\models\research\object_detection\training\ssd_mobilenet_v2_coco.config --train_dir=training --alsologtostderr --num_train_steps=50000 --num_eval_steps=5000
+
+#Habis train upload semua model.ckpt ke folder ckpt (buat folder) dalam gdrive
+#run je command2 kt colab ModelTrain.ipynb
+
+
+###Export Frozen Inference###
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path=training/pipeline.config --trained_checkpoint_prefix training/model.ckpt-36753 --output_directory inference_graph  --add_postprocessing_op True --max_detections 10
+
+###Export TFLite Inference###
+python export_tflite_ssd_graph.py --pipeline_config_path=training/pipeline.config --trained_checkpoint_prefix training/model.ckpt-36753 --output_directory inference_tflite --add_postprocessing_op True --max_detections 10
+
+
+###Export TFLite file### Quantized   pip install tf-nightly-2.0-preview
+tflite_convert --saved_model_dir=C:/tensorflow1/models/research/object_detection/inference_graph/saved_model --graph_def_file=C:/tensorflow1/models/research/object_detection/inference_tflite/tflite_graph.pb --output_file=C:/tensorflow1/models/research/object_detection/inference_tflite/detect.tflite --input_format=TENSORFLOW_GRAPHDEF --output_format=TFLITE --input_shapes="1,300, 300,3" --input_arrays=normalized_input_image_tensor --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' --inference_type=FLOAT --inference_input_type=FLOAT --allow_custom_ops
+
+toco --graph_def_file=C:/tensorflow1/models/research/object_detection/inference_tflite/tflite_graph.pb --output_file=C:/tensorflow1/models/research/object_detection/inference_tflite/detect.tflite --input_format=TENSORFLOW_GRAPHDEF --output_format=TFLITE --input_shapes=1,300,300,3 --input_arrays=normalized_input_image_tensor --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' --inference_type=FLOAT --inference_input_type=FLOAT --allow_custom_ops
+
+
+python export_tflite_ssd_graph.py \
+--pipeline_config_path=C:/tensorflow1/models/research/object_detection/training/ssd_mobilenet_v2_quantized_300x300_coco.config \
+--trained_checkpoint_prefix=C:/tensorflow1/models/research/object_detection/training/model.ckpt-62085 \
+--output_directory=C:/tensorflow1/models/research/object_detection/inference_graph/ \
+--add_postprocessing_op=true
+
+python export_tflite_ssd_graph.py --pipeline_config_path=C:/tensorflow1/models/research/object_detection/training/ssd_mobilenet_v2_quantized_300x300_coco.config --trained_checkpoint_prefix=C:/tensorflow1/models/research/object_detection/training/model.ckpt-62085 --output_directory=C:/tensorflow1/models/research/object_detection/inference_graph/ --add_postprocessing_op=true
+
+
+bazel run --config=opt tensorflow/lite/toco:toco -- \
+--input_file=C:/tensorflow1/models/research/object_detection/inference_graph/tflite_graph.pb \
+--output_file=C:/tensorflow1/models/research/object_detection/inference_graph/detect.tflite \
+--input_shapes=1,300,300,3 \
+--input_arrays=normalized_input_image_tensor \
+--output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' \
+--inference_type=QUANTIZED_UINT8 \
+--mean_values=128 \
+--std_values=128 \
+--change_concat_input_ranges=false \
+
+toco --graph_def_file=C:/tensorflow1/models/research/object_detection/inference_graph/tflite_graph.pb --output_file=C:/tensorflow1/models/research/object_detection/inference_graph/detect.tflite --input_shapes=1,300,300,3 --input_arrays=normalized_input_image_tensor --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' --mean_values=128 --std_dev_values=128 --change_concat_input_ranges=false --allow-custom-ops
+
+
+tflite_convert --output_file=C:/tensorflow1/models/research/object_detection/inference_graph/detect.tflite --graph_def_file=C:/tensorflow1/models/research/object_detection/inference_graph/tflite_graph.pb --inference_type=FLOAT --inference_input_type=QUANTIZED_UINT8 --input_arrays=normalized_input_image_tensor --input_shapes=1,300,300,3 --output_arrays=SemanticPredictions --mean_values=128 --std_dev_values=128 --allow_custom_ops
+
+tflite_convert --input_file=C:/tensorflow1/models/research/object_detection/inference_graph/tflite_graph.pb --output_file=C:/tensorflow1/models/research/object_detection/inference_graph/detect.tflite --saved_model_dir=C:/tensorflow1/models/research/object_detection/ssd_mobilenet_v2_coco_2018_03_29/saved_model --input_shapes=1,300,300,3 --input_arrays=normalized_input_image_tensor --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' --inference_type=QUANTIZED_UINT8 --mean_values=128 --std_values=128 --change_concat_input_ranges=false --allow_custom_ops
+
+
+tflite_convert --graph_def_file=C:/tensorflow1/models/research/object_detection/inference_graph/tflite_graph.pb --output_file=C:/tensorflow1/models/research/object_detection/inference_graph/detect.tflite --input_shapes=1,300,300,3 --input_arrays=normalized_input_image_tensor --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' --inference_type=QUANTIZED_UINT8 --mean_values=128 --std_dev_values=128 --change_concat_input_ranges=false --allow_custom_ops
+
+
+tflite_convert --graph_def_file="C:/tensorflow1/models/research/object_detection/inference_graph/tflite_graph.pb" --output_file="C:/tensorflow1/models/research/object_detection/inference_graph/detect.tflite" \--input_format=TENSORFLOW_GRAPHDEF --output_format=TFLITE --input_shapes=1,300, 300,3 --input_arrays=normalized_input_image_tensor --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' --inference_type=FLOAT --inference_input_type=FLOAT --allow_custom_ops
+
+
+tflite_convert --output_file=C:/tensorflow1/models/research/object_detection/inference_graph/detect.tflite --graph_def_file=C:/tensorflow1/models/research/object_detection/inference_graph/tflite_graph.pb --inference_type=FLOAT --inference_input_type=QUANTIZED_UINT8 --input_arrays=normalized_input_image_tensor --input_shapes=1,300,300,3 --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' --mean_values=128 --std_dev_values=128 --change_concat_input_ranges=false --allow_custom_ops
+
+
+tflite_convert --output_file=C:/tensorflow1/models/research/object_detection/inference_graph/detect.tflite --graph_def_file=C:/tensorflow1/models/research/object_detection/inference_graph/tflite_graph.pb 
+  --input_arrays=input 
+  --output_arrays=MobilenetV1/Predictions/Reshape_1
+
+#################################################################################################
+
+
+
+
+
+#rename gambar by batch powershell(mesti dok dalam directory tu dah)
+dir | %{$x=1} {Rename-Item $_ -NewName "image$x.jpg"; $x++ }
+
+
+
+python C:/tensorflow1/models/research/object_detection/legacy/train.py --pipeline_config_path=training/ssd_mobilenet_v2_quantized_300x300_coco.config --train_dir=training --alsologtostderr 
+
+Run Model Checker kalau nk check model
+
+tflite_convert
+--graph_def_file=C:/tensorflow1/models/research/object_detection/inference_graph/tflite_graph.pb 
+--output_file=C:/tensorflow1/models/research/object_detection/inference_graph/detect.tflite
+--input_format=TENSORFLOW_GRAPHDEF --output_format=TFLITE --inference_type=FLOAT --input_shapes="1,300, 300,3" --input_arrays=normalized_input_image_tensor --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' --inference_input_type=FLOAT --allow_custom_ops
+
+
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path=training/ssd_mobilenet_v2_coco.config  --trained_checkpoint_prefix training/model.ckpt-36753 --output_directory inference_graph --add_postprocessing_op True --max_detections 10
+
+python export_tflite_ssd_graph.py --pipeline_config_path=inference_graph/pipeline.config --trained_checkpoint_prefix training/model.ckpt-36753 --output_directory inference_tflite --add_postprocessing_op True --max_detections 10
+
+tflite_convert --graph_def_file=C:/tensorflow1/models/research/object_detection/inference_tflite/tflite_graph.pb --output_file=C:/tensorflow1/models/research/object_detection/inference_tflite/detect.tflite --input_format=TENSORFLOW_GRAPHDEF --output_format=TFLITE --inference_type=FLOAT --input_shapes="1,300, 300,3" --input_arrays=normalized_input_image_tensor --output_arrays='TFLite_Detection_PostProcess','TFLite_Detection_PostProcess:1','TFLite_Detection_PostProcess:2','TFLite_Detection_PostProcess:3' --allow_custom_ops
+
+
+
+
